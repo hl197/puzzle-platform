@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="page-header">
+    <h1>Word Ladder</h1>
+</div>
+<h4>To make a move, type a word which does not differ by more than one letter from the current word.</h4>
+
+<h4>Logger</h4>
+
+<div id="game">
+    <button type="button" class="btn btn-default" onclick="runStart(':DISPLAY'); return false;">Start!</button>
+</div>
+
+<div id="log"></div>
+
+<div class="spacer" style="width: 300px; height: 20px;"></div>
+
+<button type="button" class="btn btn-success"
+    onclick="runAction(':SOLVE'); return false;"
+>Solve</button>
+
+<button type="button" class="btn btn-primary"
+   onclick="runAction(':HINT'); return false;"
+>Hint</button>
+
+<button type="button" class="btn btn-warning"
+   onclick="runAction(':UNDO'); return false;"
+>Undo</button>
+
+<button type="button" class="btn btn-danger"
+   onclick="runAction('exit'); return false;"
+>Quit</button>
+
+<div class="spacer" style="width: 300px; height: 10px;"></div>
+
+<form>
+    <label for="action">Action: </label>
+    <input type="text" id="action-input" name="action"/>
+    <br>
+    <div class="spacer" style="width: 300px; height: 10px;"></div>
+    <button type="button" class="btn btn-default"
+       onclick="runAction(document.getElementById('action-input').value); return false;">
+        Submit Action
+    </button>
+</form>
+
+<script>
+    function updateLog() {
+        var log = document.getElementById('log');
+        log.innerHTML = log.innerHTML + '<br>' + this.responseText + '<br>';
+    }
+
+    function runAction(action) {
+        var rq = new XMLHttpRequest();
+        rq.onload = updateLog;
+        rq.open('get', 'actions?action=' + action, true);
+        rq.send();
+    }
+
+    function replaceGame() {
+        var game = document.getElementById('game');
+        game.innerHTML = this.responseText;
+    }
+
+    function runStart(action) {
+        var rq = new XMLHttpRequest();
+        rq.onload = replaceGame;
+        rq.open('get', 'actions?action=' + action, true);
+        rq.send();
+    }
+</script>
+</body>
+</html>
