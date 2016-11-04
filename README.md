@@ -7,9 +7,11 @@ Fill in all spaces of the board such that each letter only appears once per row,
 
 Goal of WordLadder:
 Go from the starting word to the target word by finding words that differ by at most one letter from the previous word.
+
 Example:
 start: cat
 target: fig
+
 cat -> pat -> pit -> pig -> fig
 
 Hint, Undo, and Solve functions can be called anytime.
